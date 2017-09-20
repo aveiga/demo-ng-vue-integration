@@ -1,0 +1,16 @@
+<h1>
+  {{title}}
+</h1>
+<label>Change the title: </label>
+<input [(ngModel)]="title" style="width: 500px;">
+<br/>
+<br/>
+<button (click)="toggleScript()">Toggle Script</button>
+<button (click)="toggleWidget()">Toggle Widget</button>
+<br/>
+<br/>
+<h1>Bellow is an Widget</h1>
+<div id="widget-wrapper" [hidden]="!show"></div>
+<br/>
+<br/>
+<span>More Angular stuff...</span>
