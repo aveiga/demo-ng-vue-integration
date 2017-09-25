@@ -1,5 +1,6 @@
 import { Component, Renderer, OnInit, Inject, ElementRef} from '@angular/core';
 import { DOCUMENT } from '@angular/platform-browser';
+declare var MessageJS:any;
 
 @Component({
   selector: 'app-root',
@@ -14,15 +15,26 @@ export class AppComponent implements OnInit {
   //Widget metadata that can and should be retrieved from a service
   widgetURL = "http://localhost:8080/build.js";
   widgetContainerId = "app";
+  messageJS = MessageJS.getInstance();
 
   constructor(
     private _renderer2: Renderer,
     @Inject(DOCUMENT) private _document,
     private elementRef:ElementRef) {   
+      let that = this;
+      this.messageJS.register(this.onMessage);
+
+      setInterval(function(){
+        that.messageJS.message("hello from master, widget!", "vue-widget");  
+      }, 5000);
   }
 
   ngOnInit(): void {
     this.elementRef.nativeElement.querySelector('#widget-wrapper').innerHTML = this.buildWidgetContainerHTML();
+  }
+
+  onMessage(obj) {
+    console.log(obj);
   }
 
   toggleScript() {

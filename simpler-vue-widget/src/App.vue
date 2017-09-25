@@ -42,6 +42,14 @@ import Vue from 'vue'
 
 Vue.use(ClientTable, {}, false)
 
+let messageJS = MessageJS.getInstance();
+messageJS.register(onMessage, 'vue-widget');
+messageJS.message("hello from widget, master!");
+
+function onMessage(obj) {
+  console.log(obj);
+}
+
 export default {
   name: 'app',
   data() {
