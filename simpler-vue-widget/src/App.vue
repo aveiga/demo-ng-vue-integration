@@ -33,7 +33,11 @@
       </li>
     </ul>
     <v-client-table :data="tableData" :columns="columns" :options="options"></v-client-table>
+
+
+    <button @click="setMessage('asd')">Change Message</button>
   </div>
+
 </template>
 
 <script>
@@ -42,15 +46,22 @@ import Vue from 'vue'
 
 Vue.use(ClientTable, {}, false)
 
-let messageJS = MessageJS.getInstance();
-messageJS.register(onMessage, 'vue-widget');
-messageJS.message("hello from widget, master!");
+// let messageJS = MessageJS.getInstance();
+// messageJS.register(onMessage, 'vue-widget');
+// messageJS.message("hello from widget, master!");
+
+lsbridge.subscribe('vue-widget', onMessage);
+lsbridge.send('gdp-dashboard', "hello form widget, master!");
 
 function onMessage(obj) {
   console.log(obj);
+
+  console.log(widget);
+
+  widget.methods.setMessage(obj);
 }
 
-export default {
+var widget = {
   name: 'app',
   data() {
     return {
@@ -67,8 +78,16 @@ export default {
         // see the options API
       }
     }
+  },
+  methods: {
+    setMessage(newMsg) {
+      this.msg = newMsg;
+    }
   }
 }
+
+export default widget;
+
 </script>
 
 <style>
