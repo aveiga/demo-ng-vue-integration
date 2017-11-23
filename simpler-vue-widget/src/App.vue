@@ -50,16 +50,7 @@ Vue.use(ClientTable, {}, false)
 // messageJS.register(onMessage, 'vue-widget');
 // messageJS.message("hello from widget, master!");
 
-lsbridge.subscribe('vue-widget', onMessage);
-lsbridge.send('gdp-dashboard', "hello form widget, master!");
-
-function onMessage(obj) {
-  console.log(obj);
-
-  console.log(widget);
-
-  widget.methods.setMessage(obj);
-}
+let self = null;
 
 var widget = {
   name: 'app',
@@ -83,6 +74,18 @@ var widget = {
     setMessage(newMsg) {
       this.msg = newMsg;
     }
+  },
+  created: function() {
+    console.log(this);
+    self = this;
+
+    function onMessage(obj) {
+      console.log(self);
+      self.setMessage(obj);
+    }
+
+    lsbridge.subscribe('vue-widget', onMessage);
+    lsbridge.send('gdp-dashboard', "hello form widget, master!");
   }
 }
 
@@ -90,7 +93,11 @@ export default widget;
 
 </script>
 
-<style>
+<style scoped>
+* {
+  font-size: 40px;
+}
+
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
