@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <img src="http://localhost:8080/logo.png">
+    <div id="logoImg"></div>
     <h1>{{ msg }}</h1>
     <h2>Essential Links</h2>
     <ul>
@@ -41,10 +41,10 @@
 </template>
 
 <script>
-import { ClientTable, Event } from 'vue-tables-2'
-import Vue from 'vue'
+import { ClientTable, Event } from "vue-tables-2";
+import Vue from "vue";
 
-Vue.use(ClientTable, {}, false)
+Vue.use(ClientTable, {}, false);
 
 // let messageJS = MessageJS.getInstance();
 // messageJS.register(onMessage, 'vue-widget');
@@ -53,11 +53,11 @@ Vue.use(ClientTable, {}, false)
 let self = null;
 
 var widget = {
-  name: 'app',
+  name: "app",
   data() {
     return {
-      msg: 'Welcome to Your Vue.js App',
-      columns: ['id', 'name', 'age'],
+      msg: "Welcome to Your Vue.js App",
+      columns: ["id", "name", "age"],
       tableData: [
         { id: 1, name: "John", age: "20" },
         { id: 2, name: "Jane", age: "24" },
@@ -68,7 +68,7 @@ var widget = {
       options: {
         // see the options API
       }
-    }
+    };
   },
   methods: {
     setMessage(newMsg) {
@@ -84,13 +84,12 @@ var widget = {
       self.setMessage(obj);
     }
 
-    lsbridge.subscribe('vue-widget', onMessage);
-    lsbridge.send('gdp-dashboard', "hello form widget, master!");
+    lsbridge.subscribe("vue-widget", onMessage);
+    lsbridge.send("gdp-dashboard", "hello form widget, master!");
   }
-}
+};
 
 export default widget;
-
 </script>
 
 <style scoped>
@@ -98,8 +97,17 @@ export default widget;
   font-size: 40px;
 }
 
+#logoImg {
+  background-image: url("assets/logo.png");
+  background-repeat: no-repeat;
+  width: auto; /*or your image's width*/
+  height: auto; /*or your image's height*/
+  margin: 0;
+  padding: 0;
+}
+
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
